@@ -11,19 +11,25 @@ Location | Contact Email | [LinkedIn](https://www.linkedin.com/in/Zealan/) | [Gi
 ---
 
 ## About Me
-A brief summary of your skills, experience, and what makes you unique.
+IT Operations Manager experienced in driving operational excellence and fostering innovation. Adept at optimizing complex systems, streamlining processes, and delivering outstanding results. Proven track record of leveraging cutting-edge technologies to enhance efficiency and drive business growth.
 
 ## Experience
 ### Manager, IT Operations — Launch Servicing, LLC
-**Date Range**  
-A summary of your role and accomplishments.
+**Aug 2023 - Present**  
+I solve problems.
 
 ### Systems Administrator — Launch Servicing, LLC
-**Date Range**  
-A summary of your role and accomplishments.
+**Oct 2022 - Aug 2023**  
+TBD
+
+### Systems Engineer - Billion Automotive
+**Jan 2020 - Oct 2022**
+During my time at Billion, I played a vital role as a reliable technical expert for executing various infrastructure projects and fulfilling requests. I worked with many diverse systems and utilized my wide range of knowledge to assist Billion in attaining its technology objectives.
 
 ## Education
-- **Degree** - School, Year
+- **Associate of Science, Systems Administration** - Southeast Technical College, 2016
+- **Associate of Science, Network Administration** - Southeast Technical College, 2016
+- **Associate of Science, Network Security** - Southeast Technical College, 2016
 - **Certifications** (if any)
 
 ## Skills

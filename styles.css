@@ -1,14 +1,9 @@
-/* Custom CSS for minimalistic styling */
+/* Custom CSS for a minimal look */
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
+    color: #333;
+    background-color: #f7f7f7;
 }
 h1, h2, h3 {
-    color: #333;
-}
-a {
-    color: #2a6496;
-    text-decoration: none;
+    color: #2d2d2d;
 }

@@ -1,0 +1,14 @@
+title: "Zealan LaCombe"
+description: "Manager, IT Operations"
+baseurl: ""
+url: "https://Zeal4n.github.io"
+theme: jekyll-slate
+
+# Social media links (optional)
+github_username: Zeal4n
+linkedin_username: Zealan
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag

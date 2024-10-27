@@ -3,10 +3,10 @@ layout: default
 title: "Resume"
 ---
 
-# Your Name
+# Zealan LaCombe
 
-**Professional Title**  
-Location | Contact Email | [LinkedIn](https://www.linkedin.com/in/username/) | [GitHub](https://github.com/username)
+**Manager, IT Operations**  
+Location | Contact Email | [LinkedIn](https://www.linkedin.com/in/Zealan/) | [GitHub](https://github.com/Zeal4n)
 
 ---
 
@@ -14,11 +14,11 @@ Location | Contact Email | [LinkedIn](https://www.linkedin.com/in/username/) | [
 A brief summary of your skills, experience, and what makes you unique.
 
 ## Experience
-### Job Title — Company
+### Manager, IT Operations — Launch Servicing, LLC
 **Date Range**  
 A summary of your role and accomplishments.
 
-### Job Title — Company
+### Systems Administrator — Launch Servicing, LLC
 **Date Range**  
 A summary of your role and accomplishments.
 

@@ -8,28 +8,27 @@
 </head>
 <body>
   <div class="desktop">
-    <!-- Start Menu and Taskbar -->
+    <!-- Taskbar with Start Button in Bottom Left -->
     <div class="taskbar">
       <div class="start-button" onclick="toggleStartMenu()">Start</div>
     </div>
 
+    <!-- Start Menu -->
     <div class="start-menu" id="startMenu">
       <ul>
         <li onclick="openApp('aboutApp')">About Me</li>
-        <!-- Add other menu items here if needed -->
       </ul>
     </div>
-    
+
     <!-- About Me Window -->
     <div class="app-window" id="aboutApp">
-      <div class="window-header">
+      <div class="window-header" onmousedown="startDrag(event, 'aboutApp')">
         <span>About Me</span>
         <button onclick="closeApp('aboutApp')">X</button>
       </div>
       <div class="window-content">
         <h3>About Me</h3>
         <p>Welcome! I’m Zealan LaCombe, an IT Operations Manager with a passion for optimizing systems...</p>
-        <!-- Add more content about yourself here -->
       </div>
     </div>
   </div>

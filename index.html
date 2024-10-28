@@ -14,16 +14,22 @@
     </div>
     <div class="start-menu" id="startMenu">
       <ul>
-        <li onclick="loadApp('about')">About Me</li>
+        <li onclick="openAbout()">About Me</li>
         <li onclick="loadApp('projects')">Projects</li>
         <li onclick="loadApp('contact')">Contact</li>
       </ul>
     </div>
     <!-- App Windows -->
     <div class="app-window" id="aboutApp">
-      <h3>About Me</h3>
-      <p>This is the About Me section. Close me to return to the desktop.</p>
-      <button onclick="closeApp('about')">Close</button>
+        <div class="window-header">
+            <span>About Me</span>
+            <button onclick="closeApp('aboutApp')">X</button>
+        </div>
+        <div class="window-content">
+            <h3>About Me</h3>
+            <p>Welcome! I’m Zealan LaCombe, an IT Operations Manager with a passion for optimizing systems...</p>
+            <!-- Add more content about yourself here -->
+        </div>
     </div>
     <div class="app-window" id="projectsApp">
       <h3>Projects</h3>

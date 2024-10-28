@@ -34,14 +34,14 @@ function toggleStartMenu() {
     document.addEventListener('mouseup', stopDrag);
   }
   
-  function onMouseMove(event) {
+  function onMouseMove(event, appId) {
     if (isDragging) {
       // Calculate new position
       const x = event.clientX - offsetX;
       const y = event.clientY - offsetY;
   
       // Apply new position to the window
-      const appWindow = document.getElementById('aboutApp');
+      const appWindow = document.getElementById(appId);
       appWindow.style.left = `${x}px`;
       appWindow.style.top = `${y}px`;
     }

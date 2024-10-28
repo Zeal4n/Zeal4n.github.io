@@ -117,3 +117,10 @@ button {
   border: none;
   cursor: pointer;
 }
+
+/* Ensure iframe fits within the app window */
+.window-content iframe {
+  border: none;
+  width: 100%;
+  height: calc(100% - 20px); /* Adjust height based on other content */
+}

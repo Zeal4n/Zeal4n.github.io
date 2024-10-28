@@ -80,7 +80,7 @@ body, html {
   left: 50px;
   background-color: #c0c0c0;
   border: 2px solid #000;
-  display: none;
+  display: none; /* Start hidden */
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   z-index: 20;

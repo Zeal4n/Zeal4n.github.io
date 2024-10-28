@@ -7,14 +7,14 @@ function toggleStartMenu() {
   // Open an app window
   function openApp(appId) {
     const appWindow = document.getElementById(appId);
-    appWindow.style.display = 'block';
+    appWindow.style.display = 'block'; // Show the app window
     document.getElementById('startMenu').style.display = 'none'; // Hide Start Menu
   }
   
   // Close an app window
   function closeApp(appId) {
     const appWindow = document.getElementById(appId);
-    appWindow.style.display = 'none';
+    appWindow.style.display = 'none'; // Hide the app window
   }
   
   // Click and Drag Functionality for the App Window

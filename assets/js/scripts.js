@@ -61,4 +61,15 @@ function toggleStartMenu() {
       startMenu.style.display = 'none';
     }
   };
+
+  // Function to update the taskbar time
+function updateTime() {
+    const now = new Date();
+    const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const timeString = now.toLocaleTimeString([], options);
+    document.getElementById('taskbarTime').textContent = timeString;
+  }
   
+  // Update the time every second
+  setInterval(updateTime, 1000);
+  updateTime(); // Initial call to set time immediately

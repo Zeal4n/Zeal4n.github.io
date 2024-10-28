@@ -3,45 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Windows 98 Desktop</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <title>Zealan LaCombe's Resume</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="desktop">
-    <!-- Start Menu -->
+    <!-- Start Menu and Taskbar -->
     <div class="taskbar">
       <div class="start-button" onclick="toggleStartMenu()">Start</div>
     </div>
+
     <div class="start-menu" id="startMenu">
       <ul>
-        <li onclick="openAbout()">About Me</li>
-        <li onclick="loadApp('projects')">Projects</li>
-        <li onclick="loadApp('contact')">Contact</li>
+        <li onclick="openApp('aboutApp')">About Me</li>
+        <!-- Add other menu items here if needed -->
       </ul>
     </div>
-    <!-- App Windows -->
+    
+    <!-- About Me Window -->
     <div class="app-window" id="aboutApp">
-        <div class="window-header">
-            <span>About Me</span>
-            <button onclick="closeApp('aboutApp')">X</button>
-        </div>
-        <div class="window-content">
-            <h3>About Me</h3>
-            <p>Welcome! I’m Zealan LaCombe, an IT Operations Manager with a passion for optimizing systems...</p>
-            <!-- Add more content about yourself here -->
-        </div>
-    </div>
-    <div class="app-window" id="projectsApp">
-      <h3>Projects</h3>
-      <p>This is the Projects section. Close me to return to the desktop.</p>
-      <button onclick="closeApp('projects')">Close</button>
-    </div>
-    <div class="app-window" id="contactApp">
-      <h3>Contact</h3>
-      <p>This is the Contact section. Close me to return to the desktop.</p>
-      <button onclick="closeApp('contact')">Close</button>
+      <div class="window-header">
+        <span>About Me</span>
+        <button onclick="closeApp('aboutApp')">X</button>
+      </div>
+      <div class="window-content">
+        <h3>About Me</h3>
+        <p>Welcome! I’m Zealan LaCombe, an IT Operations Manager with a passion for optimizing systems...</p>
+        <!-- Add more content about yourself here -->
+      </div>
     </div>
   </div>
-  <script src="assets/js/scripts.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>

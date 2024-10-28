@@ -1,201 +1,94 @@
-/* Basic Reset */
+/* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: #f8f9fa;
-    padding: 20px;
-  }
-  /* Header and Navigation */
-  header {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  header h1 {
-    font-size: 2.5em;
-    margin-bottom: 5px;
-  }
-  
-  header p {
-    font-size: 1.1em;
-    color: #666;
-  }
-  
-  nav {
-    background-color: #550000;
-    padding: 10px;
-  }
-  
-  nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1em;
-  }
-  
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Main Content */
-  main {
-    max-width: 800px;
-    margin: 20px auto;
-  }
-  
-  h2 {
-    font-size: 1.8em;
-    color: #550000;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #550000;
-    padding-bottom: 5px;
-  }
-  
-  h3 {
-    font-size: 1.4em;
-    color: #555;
-    margin-top: 20px;
-  }
-  
-  section {
-    margin-bottom: 30px;
-  }
-  
-  section p, section ul li {
-    margin: 10px 0;
-  }
-  
-  ul {
-    list-style-type: disc;
-    margin-left: 20px;
-  }
-  
-  /* Footer */
-  footer {
-    text-align: center;
-    color: #777;
-    font-size: 0.9em;
-    margin-top: 20px;
-  }
-  
-
-
-  
-
-  /* General Desktop Styles */
-body, html {
-  height: 100%;
   margin: 0;
-  font-family: Tahoma, sans-serif;
-  background-color: #008080;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Full-Screen Desktop */
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
 .desktop {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #008080;
   position: relative;
-  background-color: #3a6ea5;
+  color: #000;
 }
 
-/* Taskbar and Start Menu */
+/* Taskbar */
 .taskbar {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
-  background-color: #c0c0c0;
   display: flex;
   align-items: center;
-  padding: 0 5px;
-  box-shadow: 0 -1px 2px #000;
+  justify-content: flex-start;
+  background-color: #c0c0c0;
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .start-button {
-  background-color: #c0c0c0;
-  color: black;
-  padding: 5px 15px;
-  border: 2px solid #808080;
-  border-radius: 3px;
+  background-color: #000080;
+  color: #fff;
+  padding: 10px;
   cursor: pointer;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.2s;
 }
 
-.start-button:hover {
-  background-color: #b0b0b0;
-}
-
+/* Start Menu */
 .start-menu {
-  position: absolute;
-  bottom: 45px;
-  left: 5px;
-  background-color: #c0c0c0;
-  border: 2px solid #808080;
-  padding: 10px;
   display: none;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: #c0c0c0;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding: 10px;
   z-index: 10;
 }
 
 .start-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style-type: none;
 }
 
 .start-menu li {
-  padding: 5px;
+  padding: 8px 15px;
   cursor: pointer;
 }
 
 .start-menu li:hover {
-  background-color: #808080;
-  color: white;
+  background-color: #000080;
+  color: #fff;
 }
 
-/* App Window Styles */
+/* App Window */
 .app-window {
   position: absolute;
-  bottom: 100px;
-  left: 50px;
   width: 300px;
+  top: 100px;
+  left: 50px;
   background-color: #c0c0c0;
   border: 2px solid #000;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-  display: none;
-  z-index: 20;
-  padding: 10px;
+  display: none; /* Hidden initially */
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   z-index: 20;
-  animation: openWindow 0.5s ease-out forwards; /* Animation for open effect */
-
+  animation: openWindow 0.3s ease-out forwards;
 }
 
-
-/* Window Header for draggable header look */
 .window-header {
-  background-color: #008080;
+  background-color: #000080;
   padding: 5px;
   color: #fff;
   display: flex;
@@ -204,19 +97,16 @@ body, html {
   font-weight: bold;
 }
 
-/* Content area inside the window */
 .window-content {
   padding: 10px;
 }
 
-/* Close Button */
 button {
   background-color: #c0c0c0;
   border: none;
   cursor: pointer;
 }
 
-/* Open Animation */
 @keyframes openWindow {
   from {
     opacity: 0;
@@ -226,8 +116,4 @@ button {
     opacity: 1;
     transform: scale(1);
   }
-}
-
-.app-window h3 {
-  margin-top: 0;
 }

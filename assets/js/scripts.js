@@ -3,9 +3,9 @@ function toggleStartMenu() {
     startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
   }
   
-  function openAbout() {
-    const aboutApp = document.getElementById('aboutApp');
-    aboutApp.style.display = 'block';
+  function openApp(appId) {
+    const appWindow = document.getElementById(appId);
+    appWindow.style.display = 'block';
     document.getElementById('startMenu').style.display = 'none'; // Hide Start Menu
   }
   

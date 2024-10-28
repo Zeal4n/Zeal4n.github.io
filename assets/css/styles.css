@@ -30,7 +30,7 @@
   }
   
   nav {
-    background-color: #2f0909;
+    background-color: #550000;
     padding: 10px;
   }
   
@@ -60,9 +60,9 @@
   
   h2 {
     font-size: 1.8em;
-    color: #c7162b;
+    color: #550000;
     margin-bottom: 10px;
-    border-bottom: 2px solid #c7162b;
+    border-bottom: 2px solid #550000;
     padding-bottom: 5px;
   }
   

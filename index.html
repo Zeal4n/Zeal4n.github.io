@@ -3,32 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Zealan's GitHub</title>
+  <title>Zealan's Desktop</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome to Zealan LaCombe's GitHub Projects</h1>
-    <p>Explore my latest work and see code samples by hovering over each project.</p>
-  </header>
-
-  <main>
-    <section class="projects">
-      <div class="project" data-code="console.log('Project 1: Hello World!');">
-        <h3>Project 1: Hello World</h3>
+  <div class="desktop">
+    <div class="start-bar">
+      <div class="start-button" onclick="toggleStartMenu()">
+        <img src="assets/images/start-icon.png" alt="Start Icon">
+        Start
       </div>
-      <div class="project" data-code="console.log('Project 2: Dynamic Webpage');">
-        <h3>Project 2: Dynamic Webpage</h3>
-      </div>
-      <div class="project" data-code="console.log('Project 3: Portfolio Showcase');">
-        <h3>Project 3: Portfolio Showcase</h3>
-      </div>
-    </section>
-    
-    <div class="code-preview" id="codePreview">
-      <pre id="codeSnippet">Hover over a project to see the code.</pre>
     </div>
-  </main>
+    <div class="start-menu" id="startMenu">
+      <h3>Welcome!</h3>
+      <ul>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="content" id="content">
+      <h1>Welcome to Zealan's Desktop</h1>
+      <p>This is my interactive portfolio site! Click "Start" to navigate.</p>
+    </div>
+  </div>
 
   <script src="assets/js/scripts.js"></script>
 </body>

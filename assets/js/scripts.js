@@ -23,6 +23,9 @@ function toggleStartMenu() {
   
   function startDrag(event, appId) {
     isDragging = true;
+    activeAppId = appId;
+
+    
     const appWindow = document.getElementById(appId);
   
     // Get current mouse position relative to app window

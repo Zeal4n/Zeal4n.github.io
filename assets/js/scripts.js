@@ -72,3 +72,14 @@ setInterval(updateTaskbarTime, 1000);
 
 // Initialize the taskbar time
 updateTaskbarTime();
+
+// Event listener for clicks outside the start menu
+document.addEventListener('click', (event) => {
+  const startMenu = document.getElementById('startMenu');
+  const startButton = document.querySelector('.start-button');
+
+  // Check if the clicked target is not the start button or the start menu
+  if (!startMenu.contains(event.target) && !startButton.contains(event.target)) {
+    startMenu.style.display = 'none'; // Close the start menu
+  }
+});

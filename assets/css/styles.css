@@ -150,6 +150,11 @@ button {
   margin-left: 5px;
 }
 
+.app-content {
+  width: 100%;
+  height: calc(100% - 30px); /* Adjust for title bar height */
+  border: none;
+}
 /* Animation for minimizing and maximizing */
 .app-window {
   transition: all 0.3s ease;

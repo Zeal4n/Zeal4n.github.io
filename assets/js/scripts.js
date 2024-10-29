@@ -103,7 +103,7 @@ function maximizeApp(appId) {
   
       // Maximize to fill the screen but not cover the taskbar
       appWindow.style.width = '100vw';
-      appWindow.style.height = 'calc(100vh - 40px)'; // Adjusted height to leave space for the taskbar
+      appWindow.style.height = 'calc(100vh - 40px)';
       appWindow.style.left = '0';
       appWindow.style.top = '0';
       appWindow.classList.add('maximized');

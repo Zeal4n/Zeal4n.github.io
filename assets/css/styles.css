@@ -127,12 +127,11 @@ button {
 
 /* Maximized window */
 .app-window.maximized {
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
   top: 0;
   left: 0;
-  position: fixed;
-  z-index: 1000; /* Ensure it appears above other elements */
+  width: 100vw;
+  height: calc(100vh - 40px); /* 40px height adjustment for taskbar */  
 }
 
 .window-header button {
@@ -168,5 +167,20 @@ button {
   font-size: 14px;
   font-weight: bold;
   color: #000;
+  cursor: pointer;
+}
+
+
+/* Window controls container */
+.window-controls {
+  display: flex;
+  gap: 5px; /* Small padding between buttons */
+  margin-left: auto; /* Pushes controls to the right */
+}
+
+/* Button styling */
+.window-controls button {
+  padding: 3px 8px;
+  font-size: 12px;
   cursor: pointer;
 }

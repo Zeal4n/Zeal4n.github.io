@@ -3,6 +3,28 @@ let offsetX = 0;
 let offsetY = 0;
 let activeAppId = null;
 
+
+// Initialize ResizeObserver for dynamic iframe sizing
+function initializeResizeObserver(appId) {
+    console.log("reached initializeResizeObserver Func. appId =", appId)
+    const appWindow = document.getElementById(appId);
+    const iframe = appWindow.querySelector('.app-content');
+
+    // ResizeObserver to update iframe size based on the app window
+    const resizeObserver = new ResizeObserver(() => {
+        // Calculate available height for iframe, excluding title bar height
+        const titleBarHeight = appWindow.querySelector('.window-header').offsetHeight;
+        const contentHeight = appWindow.clientHeight - titleBarHeight;
+        iframe.style.height = `${contentHeight}px`;
+
+        // Optionally, set iframe width to match app window width
+        iframe.style.width = `${appWindow.clientWidth}px`;
+    });
+
+    // Start observing the app window for size changes
+    resizeObserver.observe(appWindow);
+}
+
 // Function to toggle the Start Menu
 function toggleStartMenu() {
   const startMenu = document.getElementById('startMenu');
@@ -138,25 +160,4 @@ function restoreApp(appId) {
     // Remove the minimized icon from the taskbar
     const icon = document.querySelector(`.minimized-icon[data-app-id="${appId}"]`);
     if (icon) icon.remove();
-}
-
-
-// Initialize ResizeObserver for dynamic iframe sizing
-function initializeResizeObserver(appId) {
-    const appWindow = document.getElementById(appId);
-    const iframe = appWindow.querySelector('.app-content');
-
-    // ResizeObserver to update iframe size based on the app window
-    const resizeObserver = new ResizeObserver(() => {
-        // Calculate available height for iframe, excluding title bar height
-        const titleBarHeight = appWindow.querySelector('.window-header').offsetHeight;
-        const contentHeight = appWindow.clientHeight - titleBarHeight;
-        iframe.style.height = `${contentHeight}px`;
-
-        // Optionally, set iframe width to match app window width
-        iframe.style.width = `${appWindow.clientWidth}px`;
-    });
-
-    // Start observing the app window for size changes
-    resizeObserver.observe(appWindow);
 }

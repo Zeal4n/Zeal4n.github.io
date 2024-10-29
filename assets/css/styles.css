@@ -124,3 +124,20 @@ button {
   width: 100%;
   height: calc(100% - 20px); /* Adjust height based on other content */
 }
+
+/* Maximized window */
+.app-window.maximized {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.window-header button {
+  background-color: #c0c0c0;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}

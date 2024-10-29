@@ -26,6 +26,8 @@
     <div class="app-window" id="aboutApp">
       <div class="window-header" onmousedown="startDrag(event, 'aboutApp')">
         <span>About Me</span>
+        <button onclick="minimizeApp('aboutApp')">_</button> <!-- Minimize Button -->
+        <button onclick="maximizeApp('aboutApp')">[ ]</button> <!-- Maximize Button -->
         <button onclick="closeApp('aboutApp')">X</button>
       </div>
       <div class="window-content">
@@ -38,6 +40,8 @@
     <div class="app-window" id="resumeApp">
         <div class="window-header" onmousedown="startDrag(event, 'resumeApp')">
           <span>My Resume</span>
+          <button onclick="minimizeApp('resumeApp')">_</button>
+          <button onclick="maximizeApp('resumeApp')">[ ]</button>
           <button onclick="closeApp('resumeApp')">X</button>
         </div>
         <div class="window-content">

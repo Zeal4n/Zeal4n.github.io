@@ -79,9 +79,18 @@ const minimizedApps = {};
 // Function to minimize an app
 function minimizeApp(appId) {
     const appWindow = document.getElementById(appId);
-    minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
-    appWindow.style.display = 'none'; // Hide the window
-}
+    if (!minimizedApps[appId]) {
+        const rect = appWindow.getBoundingClientRect();
+        minimizedApps[appId] = {
+          width: rect.width + 'px',
+          height: rect.height + 'px',
+          left: appWindow.style.left,
+          top: appWindow.style.top
+        };
+      }
+      // Hide the window
+      appWindow.style.display = 'none';
+    }
   
 // Function to maximize an app
 function maximizeApp(appId) {

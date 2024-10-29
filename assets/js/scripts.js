@@ -79,39 +79,50 @@ const minimizedApps = {};
 // Function to minimize an app
 function minimizeApp(appId) {
     const appWindow = document.getElementById(appId);
-    if (!minimizedApps[appId]) {
-        const rect = appWindow.getBoundingClientRect();
-        minimizedApps[appId] = {
-          width: rect.width + 'px',
-          height: rect.height + 'px',
-          left: appWindow.style.left,
-          top: appWindow.style.top
-        };
-      }
-      // Hide the window
+    appWindow.classList.add('hidden'); // Apply animation
+    setTimeout(() => {
       appWindow.style.display = 'none';
-    }
+      createTaskbarIcon(appId); // Add icon to taskbar
+    }, 300);
+  }
   
 // Function to maximize an app
 function maximizeApp(appId) {
     const appWindow = document.getElementById(appId);
-
+    const iframe = appWindow.querySelector('iframe');
+  
     if (appWindow.classList.contains('maximized')) {
-        // Restore the original size and position
-        appWindow.style.width = minimizedApps[appId].width;
-        appWindow.style.height = minimizedApps[appId].height;
-        appWindow.style.left = minimizedApps[appId].left;
-        appWindow.style.top = minimizedApps[appId].top;
-        appWindow.classList.remove('maximized');
+      appWindow.style.width = minimizedApps[appId].width;
+      appWindow.style.height = minimizedApps[appId].height;
+      appWindow.style.left = minimizedApps[appId].left;
+      appWindow.style.top = minimizedApps[appId].top;
+      appWindow.classList.remove('maximized');
+      iframe.style.height = '400px'; // Original iframe height
     } else {
-        // Save current position and size
-        minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
-
-        // Maximize to full screen
-        appWindow.style.width = '100vw';
-        appWindow.style.height = '100vh';
-        appWindow.style.left = '0';
-        appWindow.style.top = '0';
-        appWindow.classList.add('maximized');
+      minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
+      appWindow.style.width = '100vw';
+      appWindow.style.height = '100vh';
+      appWindow.style.left = '0';
+      appWindow.style.top = '0';
+      appWindow.classList.add('maximized');
+      iframe.style.height = 'calc(100vh - 20px)'; // Expand iframe to full height
     }
-}
+  }
+
+// Create icon in taskbar for minimized app
+function createTaskbarIcon(appId) {
+    const taskbarIcons = document.getElementById('taskbarIcons');
+    const icon = document.createElement('div');
+    icon.classList.add('minimized-icon');
+    icon.innerText = appId;
+    icon.onclick = () => restoreApp(appId);
+    taskbarIcons.appendChild(icon);
+  }
+  
+  // Restore app from minimized state
+  function restoreApp(appId) {
+    const appWindow = document.getElementById(appId);
+    appWindow.style.display = 'block';
+    appWindow.classList.remove('hidden'); // Remove hidden class for animation
+    document.querySelector(`#taskbarIcons .minimized-icon[data-app-id="${appId}"]`).remove();
+  }

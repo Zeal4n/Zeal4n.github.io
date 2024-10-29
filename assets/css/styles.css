@@ -141,3 +141,31 @@ button {
   cursor: pointer;
   margin-left: 5px;
 }
+
+/* Animation for minimizing and maximizing */
+.app-window {
+  transition: all 0.3s ease;
+}
+.app-window.hidden {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+/* Taskbar minimized app icons */
+.taskbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.minimized-icon {
+  width: 30px;
+  height: 30px;
+  background-color: #c0c0c0;
+  border: 1px solid #000;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: #000;
+}

@@ -84,7 +84,7 @@ function minimizeApp(appId) {
       appWindow.style.display = 'none';
       createTaskbarIcon(appId); // Add icon to taskbar
     }, 300);
-  }
+}
   
 // Function to maximize an app
 function maximizeApp(appId) {
@@ -107,22 +107,30 @@ function maximizeApp(appId) {
       appWindow.classList.add('maximized');
       iframe.style.height = 'calc(100vh - 20px)'; // Expand iframe to full height
     }
-  }
+}
 
 // Create icon in taskbar for minimized app
 function createTaskbarIcon(appId) {
     const taskbarIcons = document.getElementById('taskbarIcons');
+  
+    // Check if an icon already exists for this app
+    if (document.querySelector(`.minimized-icon[data-app-id="${appId}"]`)) return;
+  
     const icon = document.createElement('div');
     icon.classList.add('minimized-icon');
-    icon.innerText = appId;
+    icon.dataset.appId = appId;  // Set app ID as data attribute for easy reference
+    icon.innerText = appId; // Display the app ID or name on the icon
     icon.onclick = () => restoreApp(appId);
     taskbarIcons.appendChild(icon);
-  }
+}
   
   // Restore app from minimized state
-  function restoreApp(appId) {
+function restoreApp(appId) {
     const appWindow = document.getElementById(appId);
     appWindow.style.display = 'block';
     appWindow.classList.remove('hidden'); // Remove hidden class for animation
-    document.querySelector(`#taskbarIcons .minimized-icon[data-app-id="${appId}"]`).remove();
-  }
+  
+    // Remove the minimized icon from the taskbar
+    const icon = document.querySelector(`.minimized-icon[data-app-id="${appId}"]`);
+    if (icon) icon.remove();
+}

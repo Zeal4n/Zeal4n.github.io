@@ -3,20 +3,6 @@ let offsetX = 0;
 let offsetY = 0;
 let activeAppId = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    const resumeApp = document.querySelector('.resume-app');
-    const maximizeButton = document.querySelector('.maximize-button');
-    
-    // Initially open maximized
-    resumeApp.classList.add('maximized');
-  
-    // Toggle between maximized and normal-size on click
-    maximizeButton.addEventListener('click', () => {
-      resumeApp.classList.toggle('normal-size');
-      resumeApp.classList.toggle('maximized');
-    });
-  });
-
 
 // Initialize ResizeObserver for dynamic iframe sizing
 function initializeResizeObserver(appId) {

@@ -198,22 +198,3 @@ button {
   font-size: 12px;
   cursor: pointer;
 }
-
-.resume-app {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  transition: all 0.3s ease;
-  z-index: 10; /* Ensures it's on top */
-}
-
-/* Normal size */
-.resume-app.normal-size {
-  width: 80%; /* Adjust to your desired size */
-  height: 80%; /* Adjust to your desired size */
-  top: 10%;
-  left: 10%;
-}

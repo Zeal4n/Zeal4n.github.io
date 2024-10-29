@@ -139,18 +139,24 @@ function restoreApp(appId) {
     const icon = document.querySelector(`.minimized-icon[data-app-id="${appId}"]`);
     if (icon) icon.remove();
 }
+
+
 // Initialize ResizeObserver for dynamic iframe sizing
 function initializeResizeObserver(appId) {
     const appWindow = document.getElementById(appId);
     const iframe = appWindow.querySelector('.app-content');
-  
-    // ResizeObserver to update iframe size
+
+    // ResizeObserver to update iframe size based on the app window
     const resizeObserver = new ResizeObserver(() => {
-      // Adjust iframe height dynamically
-      const titleBarHeight = appWindow.querySelector('.title-bar').offsetHeight;
-      iframe.style.height = `${appWindow.clientHeight - titleBarHeight}px`;
+        // Calculate available height for iframe, excluding title bar height
+        const titleBarHeight = appWindow.querySelector('.window-header').offsetHeight;
+        const contentHeight = appWindow.clientHeight - titleBarHeight;
+        iframe.style.height = `${contentHeight}px`;
+
+        // Optionally, set iframe width to match app window width
+        iframe.style.width = `${appWindow.clientWidth}px`;
     });
-  
+
     // Start observing the app window for size changes
     resizeObserver.observe(appWindow);
 }

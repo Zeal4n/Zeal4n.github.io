@@ -13,6 +13,8 @@ function toggleStartMenu() {
 function openApp(appId) {
   const appWindow = document.getElementById(appId);
   appWindow.style.display = 'block';
+  // Initialize the ResizeObserver for dynamic iframe sizing
+  initializeResizeObserver(appId)
 }
 
 function closeApp(appId) {
@@ -108,6 +110,8 @@ function maximizeApp(appId) {
       appWindow.style.top = '0';
       appWindow.classList.add('maximized');
     }
+    // Initialize the ResizeObserver for dynamic iframe sizing
+    initializeResizeObserver(appId)
 }
 
 // Create icon in taskbar for minimized app
@@ -134,4 +138,19 @@ function restoreApp(appId) {
     // Remove the minimized icon from the taskbar
     const icon = document.querySelector(`.minimized-icon[data-app-id="${appId}"]`);
     if (icon) icon.remove();
+}
+// Initialize ResizeObserver for dynamic iframe sizing
+function initializeResizeObserver(appId) {
+    const appWindow = document.getElementById(appId);
+    const iframe = appWindow.querySelector('.app-content');
+  
+    // ResizeObserver to update iframe size
+    const resizeObserver = new ResizeObserver(() => {
+      // Adjust iframe height dynamically
+      const titleBarHeight = appWindow.querySelector('.title-bar').offsetHeight;
+      iframe.style.height = `${appWindow.clientHeight - titleBarHeight}px`;
+    });
+  
+    // Start observing the app window for size changes
+    resizeObserver.observe(appWindow);
 }

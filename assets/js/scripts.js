@@ -81,28 +81,28 @@ function minimizeApp(appId) {
     const appWindow = document.getElementById(appId);
     minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
     appWindow.style.display = 'none'; // Hide the window
-  }
+}
   
-  // Function to maximize an app
-  function maximizeApp(appId) {
+// Function to maximize an app
+function maximizeApp(appId) {
     const appWindow = document.getElementById(appId);
-  
+
     if (appWindow.classList.contains('maximized')) {
-      // Restore the original size and position
-      appWindow.style.width = minimizedApps[appId].width;
-      appWindow.style.height = minimizedApps[appId].height;
-      appWindow.style.left = minimizedApps[appId].left;
-      appWindow.style.top = minimizedApps[appId].top;
-      appWindow.classList.remove('maximized');
+        // Restore the original size and position
+        appWindow.style.width = minimizedApps[appId].width;
+        appWindow.style.height = minimizedApps[appId].height;
+        appWindow.style.left = minimizedApps[appId].left;
+        appWindow.style.top = minimizedApps[appId].top;
+        appWindow.classList.remove('maximized');
     } else {
-      // Save current position and size
-      minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
-  
-      // Maximize to full screen
-      appWindow.style.width = '100vw';
-      appWindow.style.height = '100vh';
-      appWindow.style.left = '0';
-      appWindow.style.top = '0';
-      appWindow.classList.add('maximized');
+        // Save current position and size
+        minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
+
+        // Maximize to full screen
+        appWindow.style.width = '100vw';
+        appWindow.style.height = '100vh';
+        appWindow.style.left = '0';
+        appWindow.style.top = '0';
+        appWindow.classList.add('maximized');
     }
-  }
+}

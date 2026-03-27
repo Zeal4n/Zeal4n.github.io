@@ -3,56 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zealan LaCombe's Resume</title>
+  <title>Zealan LaCombe's Desktop</title>
   <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
-  <div class="desktop">
-    <!-- Taskbar with Start Button in Bottom Left -->
+  <div class="desktop" id="desktop">
+
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="desktop-icon" ondblclick="openApp('aboutApp')">
+        <div class="desktop-icon-img">&#128100;</div>
+        <div class="desktop-icon-label">About Me</div>
+      </div>
+      <div class="desktop-icon" ondblclick="openApp('resumeApp')">
+        <div class="desktop-icon-img">&#128196;</div>
+        <div class="desktop-icon-label">My Resume</div>
+      </div>
+      <div class="desktop-icon" ondblclick="openApp('blogApp')">
+        <div class="desktop-icon-img">&#128221;</div>
+        <div class="desktop-icon-label">Blog</div>
+      </div>
+    </div>
+
+    <!-- Taskbar -->
     <div class="taskbar">
-        <div class="start-button" onclick="toggleStartMenu()">Start</div>
-        <div class="taskbar-icons" id="taskbarIcons"></div> <!-- Taskbar icons for minimized apps -->
-        <div class="taskbar-time" id="taskbarTime"></div>
+      <button class="start-button" onclick="toggleStartMenu()">
+        <span class="start-flag">&#9878;</span> Start
+      </button>
+      <div class="taskbar-divider"></div>
+      <div class="taskbar-apps" id="taskbarApps"></div>
+      <div class="taskbar-clock" id="taskbarTime"></div>
     </div>
 
     <!-- Start Menu -->
     <div class="start-menu" id="startMenu">
-      <ul>
-        <li onclick="openApp('aboutApp')">About Me</li>
-        <li onclick="openApp('resumeApp')">My Resume</li>
+      <div class="start-menu-sidebar">Zealan LaCombe</div>
+      <ul class="start-menu-list">
+        <li onclick="openApp('aboutApp'); closeStartMenu()">
+          <span class="menu-icon">&#128100;</span> About Me
+        </li>
+        <li onclick="openApp('resumeApp'); closeStartMenu()">
+          <span class="menu-icon">&#128196;</span> My Resume
+        </li>
+        <li onclick="openApp('blogApp'); closeStartMenu()">
+          <span class="menu-icon">&#128221;</span> Blog
+        </li>
       </ul>
     </div>
 
     <!-- About Me Window -->
-    <div class="app-window" id="aboutApp">
-        <div class="window-header" onmousedown="startDrag(event, 'aboutApp')">
-            <span>About Me</span>
-            <div class="window-controls">
-                <button onclick="minimizeApp('aboutApp')">[Min]</button> <!-- Minimize Button -->
-                <button onclick="maximizeApp('aboutApp')">[Max]</button> <!-- Maximize Button -->
-                <button onclick="closeApp('aboutApp')">[Close]</button>
-            </div>
+    <div class="app-window" id="aboutApp" onmousedown="bringToFront('aboutApp')">
+      <div class="window-titlebar" onmousedown="startDrag(event, 'aboutApp')">
+        <span class="window-title"><span class="title-icon">&#128100;</span> About Me</span>
+        <div class="window-controls">
+          <button class="win-btn min-btn" onclick="minimizeApp('aboutApp')" title="Minimize">&#8211;</button>
+          <button class="win-btn max-btn" onclick="maximizeApp('aboutApp')" title="Maximize">&#9633;</button>
+          <button class="win-btn close-btn" onclick="closeApp('aboutApp')" title="Close">&#x2715;</button>
         </div>
-      <div class="window-content">
+      </div>
+      <div class="window-body">
         <h3>About Me</h3>
-        <p>Welcome! I’m Zealan LaCombe, an IT Operations Manager who loves learning and implementing new technologies. This site an effort of love to try and get familiar with JS. </p>
+        <p>Welcome! I'm Zealan LaCombe, an IT Operations Manager who loves learning and implementing new technologies. This site is an effort of love to try and get familiar with JS.</p>
       </div>
     </div>
 
     <!-- Resume Window -->
-    <div class="app-window" id="resumeApp">
-        <div class="window-header" onmousedown="startDrag(event, 'resumeApp')">
-            <span>My Resume</span>
-            <div class="window-controls">
-                <button onclick="minimizeApp('resumeApp')">[Min]</button>
-                <button onclick="maximizeApp('resumeApp')">[Max]</button>
-                <button onclick="closeApp('resumeApp')">[Close]</button>
-            </div>
+    <div class="app-window" id="resumeApp" onmousedown="bringToFront('resumeApp')">
+      <div class="window-titlebar" onmousedown="startDrag(event, 'resumeApp')">
+        <span class="window-title"><span class="title-icon">&#128196;</span> My Resume</span>
+        <div class="window-controls">
+          <button class="win-btn min-btn" onclick="minimizeApp('resumeApp')" title="Minimize">&#8211;</button>
+          <button class="win-btn max-btn" onclick="maximizeApp('resumeApp')" title="Maximize">&#9633;</button>
+          <button class="win-btn close-btn" onclick="closeApp('resumeApp')" title="Close">&#x2715;</button>
         </div>
-        <div class="window-content">
-          <iframe src="https://zeal4n.github.io/resume" class="app-content"></iframe>
-        </div>
+      </div>
+      <div class="window-body iframe-body">
+        <iframe src="https://zeal4n.github.io/resume" class="app-iframe"></iframe>
+      </div>
     </div>
+
+    <!-- Blog Window -->
+    <div class="app-window" id="blogApp" onmousedown="bringToFront('blogApp')">
+      <div class="window-titlebar" onmousedown="startDrag(event, 'blogApp')">
+        <span class="window-title"><span class="title-icon">&#128221;</span> Blog</span>
+        <div class="window-controls">
+          <button class="win-btn min-btn" onclick="minimizeApp('blogApp')" title="Minimize">&#8211;</button>
+          <button class="win-btn max-btn" onclick="maximizeApp('blogApp')" title="Maximize">&#9633;</button>
+          <button class="win-btn close-btn" onclick="closeApp('blogApp')" title="Close">&#x2715;</button>
+        </div>
+      </div>
+      <div class="window-body blog-body" id="blogContent">
+        <!-- Blog posts rendered by JavaScript -->
+      </div>
+    </div>
+
   </div>
 
   <script src="/assets/js/scripts.js"></script>

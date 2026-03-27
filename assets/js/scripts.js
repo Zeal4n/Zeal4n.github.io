@@ -1,163 +1,311 @@
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
-let activeAppId = null;
+/* =============================================================
+   Win95-style Desktop — scripts.js
+   =============================================================
+   To add a new blog post, add an object to the blogPosts array
+   below. Each post has: title, date, and content.
+   ============================================================= */
 
+const blogPosts = [
+  {
+    title: "Welcome to My Blog!",
+    date: "March 27, 2026",
+    content: "Hello and welcome to my blog! I'm Zealan LaCombe, an IT Operations Manager based in Sioux Falls, SD. This space is where I'll share thoughts on technology, IT operations, career reflections, and whatever else catches my interest. Glad you're here — check back for updates!"
+  },
+  {
+    title: "Why I Built This Site with a Windows 95 Theme",
+    date: "March 27, 2026",
+    content: "When I started this personal site I wanted it to feel fun and personal, not just another generic portfolio. Win95 was the first OS I really fell in love with as a kid, so building a desktop-in-the-browser felt like the perfect tribute. The draggable windows, the taskbar, the teal desktop — it all brings me back. Hope you enjoy it as much as I enjoyed building it!"
+  }
+];
 
-// Initialize ResizeObserver for dynamic iframe sizing
-function initializeResizeObserver(appId) {
-    console.log("reached initializeResizeObserver Func. appId =", appId)
-    const appWindow = document.getElementById(appId);
-    const iframe = appWindow.querySelector('.app-content');
+/* ---------------------------------------------------------------
+   App metadata (title + emoji icon for taskbar / start menu)
+--------------------------------------------------------------- */
+const appMeta = {
+  aboutApp:  { title: "About Me",  icon: "\uD83D\uDC64" },
+  resumeApp: { title: "My Resume", icon: "\uD83D\uDCC4" },
+  blogApp:   { title: "Blog",      icon: "\uD83D\uDCDD" }
+};
 
-    // ResizeObserver to update iframe size based on the app window
-    const resizeObserver = new ResizeObserver(() => {
-        // Calculate available height for iframe, excluding title bar height
-        const titleBarHeight = appWindow.querySelector('.window-header').offsetHeight;
-        const contentHeight = appWindow.clientHeight - titleBarHeight;
-        iframe.style.height = `${contentHeight}px`;
+/* ---------------------------------------------------------------
+   State
+--------------------------------------------------------------- */
+let zCounter = 20;
+const openApps   = new Set();   // apps that have been opened and not closed
+const savedSizes = {};          // stores pre-maximize geometry
+const iframeObservers = {};     // ResizeObserver instances per app
 
-        // Optionally, set iframe width to match app window width
-        iframe.style.width = `${appWindow.clientWidth}px`;
-    });
+/* ---------------------------------------------------------------
+   Window Management
+--------------------------------------------------------------- */
 
-    // Start observing the app window for size changes
-    resizeObserver.observe(appWindow);
-}
-
-// Function to toggle the Start Menu
-function toggleStartMenu() {
-  const startMenu = document.getElementById('startMenu');
-  startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
-}
-
-// Function to open apps
 function openApp(appId) {
-  const appWindow = document.getElementById(appId);
-  appWindow.style.display = 'block';
-  // Initialize the ResizeObserver for dynamic iframe sizing
-  initializeResizeObserver(appId)
+  const win = document.getElementById(appId);
+  if (!win) return;
+
+  win.style.display = "block";
+  win.classList.remove("win-minimizing");
+  openApps.add(appId);
+  bringToFront(appId);
+
+  // Blog: render posts when window opens
+  if (appId === "blogApp") renderBlog();
+
+  // Resume (or any window with an iframe): set up resize tracking
+  const iframe = win.querySelector("iframe");
+  if (iframe) initIframeResize(appId);
+
+  updateTaskbar();
 }
 
 function closeApp(appId) {
-    const appWindow = document.getElementById(appId);
-    appWindow.style.display = 'none';
-    delete minimizedApps[appId]; // Remove from minimized tracking
+  const win = document.getElementById(appId);
+  if (!win) return;
+  win.style.display = "none";
+  win.classList.remove("win-maximized", "win-minimizing", "win-inactive");
+  openApps.delete(appId);
+  delete savedSizes[appId];
+  if (iframeObservers[appId]) {
+    iframeObservers[appId].disconnect();
+    delete iframeObservers[appId];
   }
-
-// Function to start dragging
-function startDrag(event, appId) {
-  isDragging = true;
-  activeAppId = appId;
-
-  // Get the app window position
-  const appWindow = document.getElementById(appId);
-  offsetX = event.clientX - appWindow.getBoundingClientRect().left;
-  offsetY = event.clientY - appWindow.getBoundingClientRect().top;
-
-  // Add mousemove and mouseup event listeners
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', stopDrag);
+  updateTaskbar();
 }
 
-// Function to move the window while dragging
-function onMouseMove(event) {
-  if (isDragging) {
-    // Calculate new position
-    const x = event.clientX - offsetX;
-    const y = event.clientY - offsetY;
-
-    // Apply new position to the active window
-    const appWindow = document.getElementById(activeAppId);
-    appWindow.style.left = `${x}px`;
-    appWindow.style.top = `${y}px`;
-  }
-}
-
-// Function to stop dragging
-function stopDrag() {
-  isDragging = false;
-  activeAppId = null;
-
-  // Remove mousemove and mouseup event listeners
-  document.removeEventListener('mousemove', onMouseMove);
-  document.removeEventListener('mouseup', stopDrag);
-}
-
-// Update the taskbar time every second
-function updateTaskbarTime() {
-  const taskbarTime = document.getElementById('taskbarTime');
-  const now = new Date();
-  taskbarTime.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
-
-// Call the function every second
-setInterval(updateTaskbarTime, 1000);
-
-// Initialize the taskbar time
-updateTaskbarTime();
-
-// Keep track of minimized apps
-const minimizedApps = {};
-
-// Function to minimize an app
 function minimizeApp(appId) {
-    const appWindow = document.getElementById(appId);
-    appWindow.classList.add('hidden'); // Apply animation
-    setTimeout(() => {
-      appWindow.style.display = 'none';
-      createTaskbarIcon(appId); // Add icon to taskbar
-    }, 300);
-}
-  
-// Function to maximize an app
-function maximizeApp(appId) {
-    const appWindow = document.getElementById(appId);
-  
-    if (appWindow.classList.contains('maximized')) {
-      // Restore the original size and position
-      appWindow.style.width = minimizedApps[appId].width;
-      appWindow.style.height = minimizedApps[appId].height;
-      appWindow.style.left = minimizedApps[appId].left;
-      appWindow.style.top = minimizedApps[appId].top;
-      appWindow.classList.remove('maximized');
-    } else {
-      // Save current position and size
-      minimizedApps[appId] = { width: appWindow.style.width, height: appWindow.style.height, left: appWindow.style.left, top: appWindow.style.top };
-  
-      // Maximize to fill the screen but not cover the taskbar
-      appWindow.style.width = '100vw';
-      appWindow.style.height = 'calc(100vh - 40px)';
-      appWindow.style.left = '0';
-      appWindow.style.top = '0';
-      appWindow.classList.add('maximized');
-    }
-    // Initialize the ResizeObserver for dynamic iframe sizing
-    initializeResizeObserver(appId)
+  const win = document.getElementById(appId);
+  if (!win) return;
+  win.classList.add("win-minimizing");
+  setTimeout(() => {
+    win.style.display = "none";
+    win.classList.remove("win-minimizing");
+    updateTaskbar();
+  }, 150);
 }
 
-// Create icon in taskbar for minimized app
-function createTaskbarIcon(appId) {
-    const taskbarIcons = document.getElementById('taskbarIcons');
-  
-    // Check if an icon already exists for this app
-    if (document.querySelector(`.minimized-icon[data-app-id="${appId}"]`)) return;
-  
-    const icon = document.createElement('div');
-    icon.classList.add('minimized-icon');
-    icon.dataset.appId = appId;  // Set app ID as data attribute for easy reference
-    icon.innerText = appId; // Display the app ID or name on the icon
-    icon.onclick = () => restoreApp(appId);
-    taskbarIcons.appendChild(icon);
+function maximizeApp(appId) {
+  const win = document.getElementById(appId);
+  if (!win) return;
+
+  if (win.classList.contains("win-maximized")) {
+    // Restore
+    const saved = savedSizes[appId];
+    if (saved) {
+      win.style.width  = saved.width;
+      win.style.height = saved.height;
+      win.style.left   = saved.left;
+      win.style.top    = saved.top;
+    }
+    win.classList.remove("win-maximized");
+  } else {
+    // Save current geometry then maximize
+    savedSizes[appId] = {
+      width:  win.style.width  || win.offsetWidth  + "px",
+      height: win.style.height || win.offsetHeight + "px",
+      left:   win.style.left   || win.offsetLeft   + "px",
+      top:    win.style.top    || win.offsetTop    + "px"
+    };
+    win.style.width  = "";
+    win.style.height = "";
+    win.style.left   = "";
+    win.style.top    = "";
+    win.classList.add("win-maximized");
+  }
+
+  const iframe = win.querySelector("iframe");
+  if (iframe) initIframeResize(appId);
 }
-  
-  // Restore app from minimized state
-function restoreApp(appId) {
-    const appWindow = document.getElementById(appId);
-    appWindow.style.display = 'block';
-    appWindow.classList.remove('hidden'); // Remove hidden class for animation
-  
-    // Remove the minimized icon from the taskbar
-    const icon = document.querySelector(`.minimized-icon[data-app-id="${appId}"]`);
-    if (icon) icon.remove();
+
+function bringToFront(appId) {
+  zCounter++;
+  // Mark all windows inactive
+  document.querySelectorAll(".app-window").forEach(w => w.classList.add("win-inactive"));
+  const win = document.getElementById(appId);
+  if (win) {
+    win.style.zIndex = zCounter;
+    win.classList.remove("win-inactive");
+  }
+  updateTaskbar();
+}
+
+/* ---------------------------------------------------------------
+   Taskbar
+--------------------------------------------------------------- */
+
+function updateTaskbar() {
+  const container = document.getElementById("taskbarApps");
+  if (!container) return;
+  container.innerHTML = "";
+
+  openApps.forEach(appId => {
+    const meta = appMeta[appId] || { title: appId, icon: "\uD83D\uDCC4" };
+    const win  = document.getElementById(appId);
+    const isVisible = win && win.style.display !== "none";
+    const isFocused = isVisible && !win.classList.contains("win-inactive");
+
+    const btn = document.createElement("button");
+    btn.className = "taskbar-app-btn" + (isFocused ? " focused" : "");
+    btn.textContent = meta.icon + " " + meta.title;
+    btn.title = meta.title;
+
+    btn.addEventListener("click", () => {
+      if (!win || win.style.display === "none") {
+        // Restore minimized window
+        win.style.display = "block";
+        win.classList.remove("win-minimizing");
+        bringToFront(appId);
+      } else if (isFocused) {
+        // Click focused window button → minimize
+        minimizeApp(appId);
+      } else {
+        // Bring to front
+        bringToFront(appId);
+      }
+    });
+
+    container.appendChild(btn);
+  });
+}
+
+/* ---------------------------------------------------------------
+   Start Menu
+--------------------------------------------------------------- */
+
+function toggleStartMenu() {
+  const menu = document.getElementById("startMenu");
+  if (!menu) return;
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function closeStartMenu() {
+  const menu = document.getElementById("startMenu");
+  if (menu) menu.style.display = "none";
+}
+
+// Close start menu when clicking elsewhere on the desktop
+document.addEventListener("mousedown", e => {
+  const menu    = document.getElementById("startMenu");
+  const startBtn = document.querySelector(".start-button");
+  if (menu && menu.style.display === "block") {
+    if (!menu.contains(e.target) && !startBtn.contains(e.target)) {
+      menu.style.display = "none";
+    }
+  }
+});
+
+/* ---------------------------------------------------------------
+   Dragging
+--------------------------------------------------------------- */
+
+let isDragging  = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+let dragAppId   = null;
+
+function startDrag(event, appId) {
+  const win = document.getElementById(appId);
+  // Don't drag a maximized window, or if clicking a button
+  if (!win || win.classList.contains("win-maximized")) return;
+  if (event.target.closest(".window-controls")) return;
+
+  isDragging  = true;
+  dragAppId   = appId;
+  bringToFront(appId);
+
+  const rect  = win.getBoundingClientRect();
+  dragOffsetX = event.clientX - rect.left;
+  dragOffsetY = event.clientY - rect.top;
+
+  document.addEventListener("mousemove", onDragMove);
+  document.addEventListener("mouseup",   onDragEnd);
+  event.preventDefault();
+}
+
+function onDragMove(event) {
+  if (!isDragging) return;
+  const win = document.getElementById(dragAppId);
+  if (!win) return;
+
+  const maxX = window.innerWidth  - win.offsetWidth;
+  const maxY = window.innerHeight - 40 - win.offsetHeight;
+  const x = Math.max(0, Math.min(event.clientX - dragOffsetX, maxX));
+  const y = Math.max(0, Math.min(event.clientY - dragOffsetY, maxY));
+
+  win.style.left = x + "px";
+  win.style.top  = y + "px";
+}
+
+function onDragEnd() {
+  isDragging = false;
+  dragAppId  = null;
+  document.removeEventListener("mousemove", onDragMove);
+  document.removeEventListener("mouseup",   onDragEnd);
+}
+
+/* ---------------------------------------------------------------
+   iframe Resize Observer
+   Keeps iframe height in sync when window is resized or maximized
+--------------------------------------------------------------- */
+
+function initIframeResize(appId) {
+  const win    = document.getElementById(appId);
+  const iframe = win && win.querySelector("iframe");
+  if (!iframe) return;
+
+  if (iframeObservers[appId]) iframeObservers[appId].disconnect();
+
+  const observer = new ResizeObserver(() => {
+    const titlebarHeight = (win.querySelector(".window-titlebar") || {}).offsetHeight || 26;
+    iframe.style.height  = (win.clientHeight - titlebarHeight) + "px";
+    iframe.style.width   = win.clientWidth + "px";
+  });
+  observer.observe(win);
+  iframeObservers[appId] = observer;
+}
+
+/* ---------------------------------------------------------------
+   Clock
+--------------------------------------------------------------- */
+
+function updateClock() {
+  const el = document.getElementById("taskbarTime");
+  if (!el) return;
+  const now = new Date();
+  el.textContent = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* ---------------------------------------------------------------
+   Blog Rendering
+   Add new posts to the blogPosts array at the top of this file.
+--------------------------------------------------------------- */
+
+function renderBlog() {
+  const container = document.getElementById("blogContent");
+  if (!container) return;
+
+  if (!blogPosts || blogPosts.length === 0) {
+    container.innerHTML = '<p class="blog-empty">No posts yet — check back soon!</p>';
+    return;
+  }
+
+  // Newest posts first
+  const sorted = [...blogPosts].reverse();
+  container.innerHTML = sorted.map(post => `
+    <div class="blog-post">
+      <div class="blog-post-title">${escapeHtml(post.title)}</div>
+      <div class="blog-post-date">${escapeHtml(post.date)}</div>
+      <div class="blog-post-content">${escapeHtml(post.content)}</div>
+    </div>
+  `).join("");
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g,  "&amp;")
+    .replace(/</g,  "&lt;")
+    .replace(/>/g,  "&gt;")
+    .replace(/"/g,  "&quot;")
+    .replace(/'/g,  "&#039;");
 }

@@ -5,6 +5,13 @@
    below. Each post has: title, date, and content.
    ============================================================= */
 
+/* ---------------------------------------------------------------
+   Mobile / Touch detection
+--------------------------------------------------------------- */
+function isMobile() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
 const blogPosts = [
   {
     title: "Welcome to My Blog!",
@@ -47,6 +54,11 @@ function openApp(appId) {
   win.classList.remove("win-minimizing");
   openApps.add(appId);
   bringToFront(appId);
+
+  // On mobile, always maximize so windows fill the screen
+  if (isMobile() && !win.classList.contains("win-maximized")) {
+    win.classList.add("win-maximized");
+  }
 
   // Blog: render posts when window opens
   if (appId === "blogApp") renderBlog();
@@ -182,15 +194,37 @@ function closeStartMenu() {
   if (menu) menu.style.display = "none";
 }
 
-// Close start menu when clicking elsewhere on the desktop
-document.addEventListener("mousedown", e => {
+// Close start menu when clicking or tapping elsewhere on the desktop
+function handleOutsideMenuInteraction(e) {
   const menu    = document.getElementById("startMenu");
   const startBtn = document.querySelector(".start-button");
   if (menu && menu.style.display === "block") {
-    if (!menu.contains(e.target) && !startBtn.contains(e.target)) {
+    const target = e.target;
+    if (!menu.contains(target) && !startBtn.contains(target)) {
       menu.style.display = "none";
     }
   }
+}
+document.addEventListener("mousedown", handleOutsideMenuInteraction);
+// passive: true is correct here — this handler never calls preventDefault()
+document.addEventListener("touchstart", handleOutsideMenuInteraction, { passive: true });
+
+/* ---------------------------------------------------------------
+   Touch support for desktop icons (single-tap = open on mobile)
+--------------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".desktop-icon[ondblclick]").forEach(icon => {
+    // Extract the app ID from the ondblclick attribute value
+    const match = icon.getAttribute("ondblclick").match(/openApp\('(\w+)'\)/);
+    if (!match) return;
+    const appId = match[1];
+
+    icon.addEventListener("touchend", e => {
+      if (!isMobile()) return; // let non-mobile touch devices keep normal dblclick flow
+      e.preventDefault(); // prevent synthesized mouse click/dblclick after touch
+      openApp(appId);
+    });
+  });
 });
 
 /* ---------------------------------------------------------------

@@ -1,200 +1,449 @@
-/* General Reset */
+/* ============================================================
+   Win95-style Desktop CSS
+   ============================================================ */
+
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Full-Screen Desktop */
 body, html {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
 }
 
+/* ---- Desktop ---- */
 .desktop {
-  display: flex;
-  flex-direction: column;
   width: 100vw;
   height: 100vh;
   background-color: #008080;
   position: relative;
-  color: #000;
+  overflow: hidden;
 }
 
-/* Taskbar */
+/* ---- Desktop Icons ---- */
+.desktop-icons {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 1;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 72px;
+  padding: 4px;
+  cursor: default;
+  text-align: center;
+  user-select: none;
+}
+
+.desktop-icon:hover {
+  background-color: rgba(0, 0, 128, 0.4);
+  outline: 1px dotted #ffffff;
+}
+
+.desktop-icon-img {
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.desktop-icon-label {
+  color: #ffffff;
+  font-size: 11px;
+  text-shadow: 1px 1px 2px #000000;
+  word-break: break-word;
+}
+
+/* ---- Taskbar ---- */
 .taskbar {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align Start Button to the Left */
   background-color: #c0c0c0;
   height: 40px;
   width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
-  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.5);
+  /* Win95 raised top edge */
+  border-top: 2px solid #ffffff;
+  box-shadow: 0 -1px 0 #808080;
+  z-index: 100;
+  gap: 4px;
+  padding: 0 4px;
 }
 
 /* Start Button */
 .start-button {
-  background-color: #000080;
-  color: #fff;
-  padding: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Taskbar Time */
-.taskbar-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 10px;
   background-color: #c0c0c0;
-  color: #000;
-  padding: 5px 10px;
-  margin-left: auto; /* Align to the right */
-  border: 2px solid #000;
-  border-radius: 3px;
+  color: #000000;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  /* Win95 raised button border */
+  border: 2px solid;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #404040;
 }
 
-/* Start Menu */
+.start-button:active {
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  box-shadow: inset -1px -1px 0 #dfdfdf, inset 1px 1px 0 #404040;
+  padding: 1px 9px 0 11px;
+}
+
+.start-flag {
+  font-size: 16px;
+}
+
+/* Taskbar vertical divider */
+.taskbar-divider {
+  width: 2px;
+  height: 28px;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  flex-shrink: 0;
+}
+
+/* Taskbar App Buttons area */
+.taskbar-apps {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  padding: 5px 0;
+}
+
+/* Taskbar button for each open app */
+.taskbar-app-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  min-width: 80px;
+  max-width: 160px;
+  padding: 0 8px;
+  background-color: #c0c0c0;
+  color: #000000;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 2px solid;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #404040;
+}
+
+.taskbar-app-btn.focused {
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  box-shadow: inset -1px -1px 0 #dfdfdf, inset 1px 1px 0 #404040;
+  background-color: #b0b0b0;
+}
+
+/* Taskbar Clock */
+.taskbar-clock {
+  height: 28px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #000000;
+  white-space: nowrap;
+  flex-shrink: 0;
+  /* Win95 inset (sunken) border */
+  border: 2px solid;
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  box-shadow: inset -1px -1px 0 #dfdfdf, inset 1px 1px 0 #404040;
+}
+
+/* ---- Start Menu ---- */
 .start-menu {
   display: none;
   position: absolute;
-  bottom: 40px; /* Position above the taskbar */
-  left: 10px;
-  background-color: #c0c0c0;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  z-index: 10;
-}
-
-.start-menu ul {
-  list-style-type: none;
-}
-
-.start-menu li {
-  padding: 8px 15px;
-  cursor: pointer;
-}
-
-.start-menu li:hover {
-  background-color: #000080;
-  color: #fff;
-}
-
-/* App Window */
-.app-window {
-  position: absolute;
-  width: 300px;
-  top: 100px;
-  left: 50px;
-  background-color: #c0c0c0;
-  border: 2px solid #000;
-  display: none; /* Start hidden */
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  z-index: 20;
-}
-
-.window-header {
-  background-color: #000080;
-  padding: 5px;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  cursor: move; /* Indicate draggable area */
-}
-
-.window-content {
-  padding: 10px;
-}
-
-button {
-  background-color: #c0c0c0;
-  border: none;
-  cursor: pointer;
-}
-
-/* Ensure iframe fits within the app window */
-.window-content iframe {
-  border: none;
-  width: 100%;
-  height: calc(100% - 20px); /* Adjust height based on other content */
-}
-
-/* Maximized window */
-.app-window.maximized {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
+  bottom: 40px;
   left: 0;
-  position: fixed;
-  z-index: 1000; /* Ensure it appears above other elements */
-}
-/* Maximized window styling to exclude taskbar area */
-.maximized {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: calc(100vh - 40px); /* 40px height adjustment for taskbar */
-}
-
-.window-header button {
+  width: 220px;
   background-color: #c0c0c0;
-  border: none;
-  cursor: pointer;
-  margin-left: 5px;
+  /* Win95 raised border with outer shadow */
+  border: 2px solid;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  box-shadow: 2px 2px 0 #000000;
+  z-index: 200;
+  overflow: hidden;
 }
 
-.app-content {
-  width: 100%;
-  height: 50%; /* Adjust for title bar height */
-  border: none;
-}
-/* Animation for minimizing and maximizing */
-.app-window {
-  transition: all 0.3s ease;
-}
-.app-window.hidden {
-  opacity: 0;
-  transform: scale(0.1);
-}
-/* Taskbar minimized app icons */
-.taskbar-icons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-}
-
-.minimized-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #c0c0c0; /* Light gray color */
-  border: 1px solid #000;
-  text-align: center;
-  line-height: 40px; /* Center text vertically */
+/* Vertical sidebar text */
+.start-menu-sidebar {
+  background: linear-gradient(to bottom, #000080 0%, #1084d0 100%);
+  color: #ffffff;
   font-size: 14px;
   font-weight: bold;
-  color: #000;
-  cursor: pointer;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  width: 24px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 4px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
+.start-menu-list {
+  list-style: none;
+  padding: 4px 0;
+  margin-left: 24px;
+}
 
-/* Window controls container */
+.start-menu-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-size: 13px;
+  cursor: default;
+  user-select: none;
+}
+
+.start-menu-list li:hover {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+.menu-icon {
+  font-size: 16px;
+}
+
+/* ---- App Window ---- */
+.app-window {
+  position: absolute;
+  min-width: 240px;
+  min-height: 160px;
+  background-color: #c0c0c0;
+  display: none;
+  overflow: hidden;
+  resize: both;
+  /* Win95 3-layer border:
+     outer 1px black via box-shadow,
+     then 2px raised border */
+  border: 2px solid;
+  border-top-color: #dfdfdf;
+  border-left-color: #dfdfdf;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  box-shadow: 0 0 0 1px #000000, inset 1px 1px 0 #ffffff, inset -1px -1px 0 #404040;
+}
+
+/* Default window sizes and positions */
+#aboutApp  { width: 400px; height: 220px; top: 60px;  left: 100px; }
+#resumeApp { width: 760px; height: 560px; top: 80px;  left: 140px; }
+#blogApp   { width: 520px; height: 460px; top: 100px; left: 180px; }
+
+/* Window Title Bar */
+.window-titlebar {
+  height: 26px;
+  background-color: #000080;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Inactive title bar */
+.app-window.win-inactive .window-titlebar {
+  background-color: #808080;
+}
+
+.window-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.title-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Window Control Buttons */
 .window-controls {
   display: flex;
-  gap: 5px; /* Small padding between buttons */
-  margin-left: auto; /* Pushes controls to the right */
+  gap: 2px;
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
-/* Button styling */
-.window-controls button {
-  padding: 3px 8px;
-  font-size: 12px;
+.win-btn {
+  width: 18px;
+  height: 18px;
+  background-color: #c0c0c0;
+  color: #000000;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: bold;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  /* Win95 raised button */
+  border: 2px solid;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #404040;
+}
+
+.win-btn:active {
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  box-shadow: inset -1px -1px 0 #dfdfdf, inset 1px 1px 0 #404040;
+  padding: 1px 0 0 1px;
+}
+
+/* Window Body */
+.window-body {
+  padding: 10px;
+  overflow: auto;
+  background-color: #c0c0c0;
+  height: calc(100% - 26px);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.window-body h3 {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+/* iframe body - no padding, fills window */
+.iframe-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  flex: 1;
+}
+
+/* Blog body */
+.blog-body {
+  background-color: #ffffff;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.blog-post {
+  padding: 12px 14px;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.blog-post:last-child {
+  border-bottom: none;
+}
+
+.blog-post-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: #000080;
+}
+
+.blog-post-date {
+  font-size: 11px;
+  color: #808080;
+  margin-bottom: 8px;
+}
+
+.blog-post-content {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #000000;
+}
+
+.blog-empty {
+  padding: 16px;
+  color: #808080;
+  font-style: italic;
+}
+
+/* Maximized state */
+.app-window.win-maximized {
+  width: 100vw !important;
+  height: calc(100vh - 40px) !important;
+  top: 0 !important;
+  left: 0 !important;
+  resize: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* Minimize animation */
+.app-window.win-minimizing {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  transform: scale(0.05);
+  opacity: 0;
+  transform-origin: bottom left;
 }

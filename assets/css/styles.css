@@ -447,3 +447,127 @@ body, html {
   opacity: 0;
   transform-origin: bottom left;
 }
+
+/* ============================================================
+   Mobile / Touch responsive styles
+   ============================================================ */
+@media (max-width: 768px) {
+  body, html {
+    overflow: hidden;
+  }
+
+  /* Larger, easier-to-tap desktop icons */
+  .desktop-icons {
+    top: 12px;
+    left: 12px;
+    gap: 20px;
+  }
+
+  .desktop-icon {
+    width: 80px;
+    padding: 8px 4px;
+  }
+
+  .desktop-icon-img {
+    font-size: 40px;
+  }
+
+  .desktop-icon-label {
+    font-size: 13px;
+  }
+
+  /* Taller taskbar for easier touch */
+  .taskbar {
+    height: 48px;
+  }
+
+  .start-button {
+    height: 36px;
+    font-size: 14px;
+    padding: 0 12px;
+  }
+
+  .start-flag {
+    font-size: 18px;
+  }
+
+  .taskbar-divider {
+    height: 34px;
+  }
+
+  .taskbar-app-btn {
+    height: 34px;
+    font-size: 12px;
+    min-width: 70px;
+    padding: 0 8px;
+  }
+
+  .taskbar-clock {
+    height: 34px;
+    font-size: 13px;
+  }
+
+  /* Start menu takes full width on mobile */
+  .start-menu {
+    width: 100%;
+    bottom: 48px;
+  }
+
+  .start-menu-list li {
+    padding: 10px 16px;
+    font-size: 15px;
+  }
+
+  .menu-icon {
+    font-size: 20px;
+  }
+
+  /* App windows: always full-screen on mobile */
+  .app-window {
+    position: fixed !important;
+    width: 100vw !important;
+    height: calc(100vh - 48px) !important;
+    top: 0 !important;
+    left: 0 !important;
+    resize: none !important;
+    min-width: unset;
+    min-height: unset;
+  }
+
+  /* Taller title bar for easier touch */
+  .window-titlebar {
+    height: 36px;
+    cursor: default;
+  }
+
+  .window-body {
+    height: calc(100% - 36px);
+    font-size: 14px;
+    padding: 14px;
+  }
+
+  .window-body h3 {
+    font-size: 16px;
+  }
+
+  /* Larger window control buttons */
+  .win-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Maximized state with taller taskbar */
+  .app-window.win-maximized {
+    height: calc(100vh - 48px) !important;
+  }
+
+  /* Blog posts more readable on mobile */
+  .blog-post-title {
+    font-size: 16px;
+  }
+
+  .blog-post-content {
+    font-size: 14px;
+  }
+}

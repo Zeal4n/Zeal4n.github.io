@@ -93,3 +93,46 @@
     font-size: 0.9em;
     margin-top: 20px;
   }
+
+  /* ============================================================
+     Mobile responsive styles
+     ============================================================ */
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+
+    header {
+      padding: 14px 10px;
+    }
+
+    header h1 {
+      font-size: 1.8em;
+    }
+
+    header p {
+      font-size: 0.95em;
+    }
+
+    nav ul {
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    nav ul li a {
+      font-size: 0.9em;
+    }
+
+    main {
+      margin: 12px auto;
+    }
+
+    h2 {
+      font-size: 1.4em;
+    }
+
+    h3 {
+      font-size: 1.15em;
+    }
+  }
